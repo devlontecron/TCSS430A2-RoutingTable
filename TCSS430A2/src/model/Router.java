@@ -14,11 +14,40 @@ public class Router {
 	
 	private static ArrayList<String> ipArr = new ArrayList<String>();
 	private static ArrayList<Integer> hopsArr = new ArrayList<Integer>();
-	private static ArrayList<Integer> portsArr = new ArrayList<Integer>();
+	private static ArrayList<String> portsArr = new ArrayList<String>();
 	private static ArrayList<Date> timeArr = new ArrayList<Date>();
+	public  static ArrayList<Router> routerArr = new ArrayList<Router>();
 	
 	public static void Router(){
 		
+	}
+	
+	public static String getIPFromIndex(int x){
+		return ipArr.get(x);
+	}
+	
+	public static int getHopsFromIndex(int x){
+		return hopsArr.get(x);
+	}
+	
+	public static String getPortFromIndex(int x){
+		return portsArr.get(x);
+	}
+	
+	public static Date getTimeFromIndex(int x){
+		return timeArr.get(x);
+	}
+	
+	public static Router getRouterFromIndex(int x){
+		return routerArr.get(x);
+	}
+	
+	public static void setRouterArr(Router route) {
+		routerArr.add(route);
+	}
+	
+	public static ArrayList<Router> getRouterArr(){
+		return routerArr;
 	}
 
 	public static ArrayList<String> getIpArr() {
@@ -37,11 +66,11 @@ public class Router {
 		hopsArr.add(hops);
 	}
 
-	public static ArrayList<Integer> getPortsArr() {
+	public static ArrayList<String> getPortsArr() {
 		return portsArr;
 	}
 
-	public static void setPortsArr(int ports) {
+	public static void setPortsArr(String ports) {
 		portsArr.add(ports);
 	}
 
@@ -69,6 +98,8 @@ public class Router {
 		timeArr.remove(x);
 	}
 	
+
+	
 	public static void removeAllAtIndex(int x){
 		timeArr.remove(x);
 		portsArr.remove(x);
@@ -76,7 +107,7 @@ public class Router {
 		ipArr.remove(x);
 	}
 	
-	public static void addAll(String ip, int hops, int ports, Date time){
+	public static void addAll(String ip, int hops, String ports, Date time){
 		timeArr.add(time);
 		portsArr.add(ports);
 		hopsArr.add(hops);
