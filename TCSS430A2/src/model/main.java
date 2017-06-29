@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -14,7 +15,8 @@ public class main {
 		
 		ArrayList<Router> routers = new ArrayList<Router>();
 		Random rand = new Random(System.currentTimeMillis());
-		
+		int chosenRouter;
+		final int NUM_OF_PORTS = 3;
 		
 		Router router1 = new Router();
 		Router router2 = new Router();
@@ -22,37 +24,62 @@ public class main {
 		Router router4 = new Router();
 		
 		
-		router1.addNode("e1", "192.168.1.0");
-		router1.addNode("e2", router2);
-		router1.addNote("e3", router3);
 		
-		router2.addNode("e1", router1);
-		router2.addNode("e2", "192.168.2.0");
-		router2.addNode("e3", router3);
+		router1.addTableEntry("192.168.1.0", 0, null, new Date(System.currentTimeMillis()));
+		router2.addTableEntry("192.168.2.0", 0, null, new Date(System.currentTimeMillis()));
+		router3.addTableEntry("192.168.3.0", 0, null, new Date(System.currentTimeMillis()));
+		router4.addTableEntry("192.168.4.0", 0, null, new Date(System.currentTimeMillis()));
 		
-		router3.addNode("e1", router2);
-		router3.addNode("e2", router1);
-		router3.addNode("e3", router4);
+		router1.addAll(router2.getIPFromIndex(0), router2.getHopsFromIndex(0) + 1, "e1", new Date(System.currentTimeMillis()));
+		router1.addAll("192.168.1.1", 1, "e2", new Date(System.currentTimeMillis()));
+		router1.addAll(router3.getIPFromIndex(0), router3.getHopsFromIndex(0) + 1, "e3", new Date(System.currentTimeMillis()));
 		
-		router4.addNode("e1", "192.168.3.0");
-		router4.addNode("e2", "192.168.4.0");
-		router4.addNode("e3", "192.168.5.0");
+		
+		router2.addAll(router1.getIPFromIndex(0), router1.getHopsFromIndex(0) + 1, "e1", new Date(System.currentTimeMillis()));
+		router2.addAll("192.168.2.1", 1, "e2", new Date(System.currentTimeMillis()));
+		router2.addAll(router3.getIPFromIndex(0), router3.getHopsFromIndex(0) + 1, "e3", new Date(System.currentTimeMillis()));
+		
+		router3.addAll(router1.getIPFromIndex(0), router1.getHopsFromIndex(0) + 1, "e1", new Date(System.currentTimeMillis()));
+		router3.addAll(router2.getIPFromIndex(0), router2.getHopsFromIndex(0) + 1, "e2", new Date(System.currentTimeMillis()));
+		router3.addAll(router4.getIPFromIndex(0), router4.getHopsFromIndex(0) + 1, "e3", new Date(System.currentTimeMillis()));
+		
+		router4.addAll(router3.getIPFromIndex(0), router3.getHopsFromIndex(0) + 1, "e1", new Date(System.currentTimeMillis()));
+		
 		
 		routers.add(router1);
 		routers.add(router2);
 		routers.add(router3);
 		routers.add(router4);
 		
+		chosenRouter = rand.nextInt() * 0 + routers.size() - 1;
+		
 		for(Router router : routers){
 			router.displayTable();
 		}
 		
-		// Remove a random router from the network.
-		routers.remove(rand.nextInt() * 0 + routers.size() - 1);
+		switch(chosenRouter){
+			case 0:
+				router2.removeAllAtIndex(1);
+				router3.removeAllAtIndex(1);
+				
+				break;
+			
+			case 1:
+				router1.removeAllAtIndex(1);
+				router3.removeAllAtIndex(2);
+				break;
+			case 2:
+				router1.removeAllAtIndex(3);
+				router4.removeAllAtIndex(1);
+				break;
+			case 3:
+				router3.removeAllAtIndex(3);
+				break;
 		
+		}
+		routers.remove(chosenRouter);
 		
 		for(Router router : routers){
-			router.updateTable();
 			router.displayTable();
 		}
 		
