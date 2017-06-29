@@ -19,8 +19,6 @@ public class Router {
 	
 	public static void Router(){
 		
-		
-		
 	}
 
 	public static ArrayList<String> getIpArr() {
@@ -55,6 +53,35 @@ public class Router {
 		timeArr.add(time);
 	}
 	
+	public static void removeIP(int x){
+		ipArr.remove(x);
+	}
+	
+	public static void removeHop(int x){
+		hopsArr.remove(x);
+	}
+	
+	public static void removePorts(int x){
+		portsArr.remove(x);
+	}
+	
+	public static void removeTime(int x){
+		timeArr.remove(x);
+	}
+	
+	public static void removeAllAtIndex(int x){
+		timeArr.remove(x);
+		portsArr.remove(x);
+		hopsArr.remove(x);
+		ipArr.remove(x);
+	}
+	
+	public static void addAll(String ip, int hops, int ports, Date time){
+		timeArr.add(time);
+		portsArr.add(ports);
+		hopsArr.add(hops);
+		ipArr.add(ip);
+	}
 		
 
 }
