@@ -75,6 +75,13 @@ public class Router {
 		hopsArr.remove(x);
 		ipArr.remove(x);
 	}
+	
+	public static void addAll(String ip, int hops, int ports, Date time){
+		timeArr.add(time);
+		portsArr.add(ports);
+		hopsArr.add(hops);
+		ipArr.add(ip);
+	}
 		
 
 }
