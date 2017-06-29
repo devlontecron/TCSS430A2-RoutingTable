@@ -118,6 +118,8 @@ public class Router {
 		ipArr.add(ip);
 	}
 	
-		
+	public void displayTable(){
+		//TODO
+	}
 
 }
