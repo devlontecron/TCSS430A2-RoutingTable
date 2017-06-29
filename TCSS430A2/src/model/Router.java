@@ -15,10 +15,14 @@ public class Router {
 	private static ArrayList<String> ipArr = new ArrayList<String>();
 	private static ArrayList<Integer> hopsArr = new ArrayList<Integer>();
 	private static ArrayList<String> portsArr = new ArrayList<String>();
-	private static ArrayList<Date> timeArr = new ArrayList<Date>();
+	private static ArrayList<String> timeArr = new ArrayList<String>();
 	public  static ArrayList<Router> routerArr = new ArrayList<Router>();
 	
+	private static Date myTime = new Date();
+	
 	public static void Router(){
+		
+		addTableEntry("192",0,"PORT", myTime.toString());
 		
 	}
 	
@@ -34,7 +38,7 @@ public class Router {
 		return portsArr.get(x);
 	}
 	
-	public static Date getTimeFromIndex(int x){
+	public static String getTimeFromIndex(int x){
 		return timeArr.get(x);
 	}
 	
@@ -74,12 +78,12 @@ public class Router {
 		portsArr.add(ports);
 	}
 
-	public static ArrayList<Date> getTimeArr() {
+	public static ArrayList<String> getTimeArr() {
 		return timeArr;
 	}
 
 	public static void setTimeArr(Date time) {
-		timeArr.add(time);
+		timeArr.add(time.toString());
 	}
 	
 	public static void removeIP(int x){
@@ -100,19 +104,20 @@ public class Router {
 	
 
 	
-	public static void removeAllAtIndex(int x){
+	public static void removeTableEntryAtIndex(int x){
 		timeArr.remove(x);
 		portsArr.remove(x);
 		hopsArr.remove(x);
 		ipArr.remove(x);
 	}
 	
-	public static void addAll(String ip, int hops, String ports, Date time){
+	public static void addTableEntry(String ip, int hops, String ports, String time){
 		timeArr.add(time);
 		portsArr.add(ports);
 		hopsArr.add(hops);
 		ipArr.add(ip);
 	}
+	
 		
 
 }
