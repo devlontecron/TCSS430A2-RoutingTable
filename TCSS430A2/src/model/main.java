@@ -81,5 +81,12 @@ public class main {
 			router.displayTable();
 		}
 	}
+	
+	public static void dfs(){
+		//TODO
+		
+	}
+	
+	
 
 }
