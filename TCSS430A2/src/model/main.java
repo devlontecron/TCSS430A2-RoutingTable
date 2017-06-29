@@ -30,6 +30,7 @@ public class main {
 		router3.addTableEntry("192.168.3.0", 0, null, timeStamp.toString());
 		router4.addTableEntry("192.168.4.0", 0, null, timeStamp.toString());
 		
+		
 		router1.addTableEntry(router2.getIPFromIndex(0), router2.getHopsFromIndex(0) + 1, "e1", timeStamp.toString());
 		router1.addTableEntry("192.168.1.1", 1, "e2", timeStamp.toString());
 		router1.addTableEntry(router3.getIPFromIndex(0), router3.getHopsFromIndex(0) + 1, "e3", timeStamp.toString());
