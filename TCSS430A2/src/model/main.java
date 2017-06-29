@@ -21,7 +21,6 @@ public class main {
 		Router router3 = new Router();
 		Router router4 = new Router();
 		
-		router1.addAll("192.168.1.0", hops, ports, time);
 		
 		router1.addNode("e1", "192.168.1.0");
 		router1.addNode("e2", router2);
@@ -56,6 +55,11 @@ public class main {
 			router.updateTable();
 			router.displayTable();
 		}
+		
+		
+	}
+	
+	public static void addNode(String ipAddress){
 		
 		
 	}
