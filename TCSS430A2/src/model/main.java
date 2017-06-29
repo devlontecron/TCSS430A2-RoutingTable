@@ -16,7 +16,7 @@ public class main {
 		ArrayList<Router> routers = new ArrayList<Router>();
 		Random rand = new Random(System.currentTimeMillis());
 		int chosenRouter;
-		final int NUM_OF_PORTS = 3;
+		Date timeStamp = new Date(System.currentTimeMillis());
 		
 		Router router1 = new Router();
 		Router router2 = new Router();
@@ -25,26 +25,25 @@ public class main {
 		
 		
 		
-		router1.addTableEntry("192.168.1.0", 0, null, new Date(System.currentTimeMillis()));
-		router2.addTableEntry("192.168.2.0", 0, null, new Date(System.currentTimeMillis()));
-		router3.addTableEntry("192.168.3.0", 0, null, new Date(System.currentTimeMillis()));
-		router4.addTableEntry("192.168.4.0", 0, null, new Date(System.currentTimeMillis()));
+		router1.addTableEntry("192.168.1.0", 0, null, timeStamp.toString());
+		router2.addTableEntry("192.168.2.0", 0, null, timeStamp.toString());
+		router3.addTableEntry("192.168.3.0", 0, null, timeStamp.toString());
+		router4.addTableEntry("192.168.4.0", 0, null, timeStamp.toString());
 		
-		router1.addAll(router2.getIPFromIndex(0), router2.getHopsFromIndex(0) + 1, "e1", new Date(System.currentTimeMillis()));
-		router1.addAll("192.168.1.1", 1, "e2", new Date(System.currentTimeMillis()));
-		router1.addAll(router3.getIPFromIndex(0), router3.getHopsFromIndex(0) + 1, "e3", new Date(System.currentTimeMillis()));
+		router1.addTableEntry(router2.getIPFromIndex(0), router2.getHopsFromIndex(0) + 1, "e1", timeStamp.toString());
+		router1.addTableEntry("192.168.1.1", 1, "e2", timeStamp.toString());
+		router1.addTableEntry(router3.getIPFromIndex(0), router3.getHopsFromIndex(0) + 1, "e3", timeStamp.toString());
 		
 		
-		router2.addAll(router1.getIPFromIndex(0), router1.getHopsFromIndex(0) + 1, "e1", new Date(System.currentTimeMillis()));
-		router2.addAll("192.168.2.1", 1, "e2", new Date(System.currentTimeMillis()));
-		router2.addAll(router3.getIPFromIndex(0), router3.getHopsFromIndex(0) + 1, "e3", new Date(System.currentTimeMillis()));
+		router2.addTableEntry(router1.getIPFromIndex(0), router1.getHopsFromIndex(0) + 1, "e1", timeStamp.toString());
+		router2.addTableEntry("192.168.2.1", 1, "e2", timeStamp.toString());
+		router2.addTableEntry(router3.getIPFromIndex(0), router3.getHopsFromIndex(0) + 1, "e3", timeStamp.toString());
 		
-		router3.addAll(router1.getIPFromIndex(0), router1.getHopsFromIndex(0) + 1, "e1", new Date(System.currentTimeMillis()));
-		router3.addAll(router2.getIPFromIndex(0), router2.getHopsFromIndex(0) + 1, "e2", new Date(System.currentTimeMillis()));
-		router3.addAll(router4.getIPFromIndex(0), router4.getHopsFromIndex(0) + 1, "e3", new Date(System.currentTimeMillis()));
+		router3.addTableEntry(router1.getIPFromIndex(0), router1.getHopsFromIndex(0) + 1, "e1", timeStamp.toString());
+		router3.addTableEntry(router2.getIPFromIndex(0), router2.getHopsFromIndex(0) + 1, "e2", timeStamp.toString());
+		router3.addTableEntry(router4.getIPFromIndex(0), router4.getHopsFromIndex(0) + 1, "e3", timeStamp.toString());
 		
-		router4.addAll(router3.getIPFromIndex(0), router3.getHopsFromIndex(0) + 1, "e1", new Date(System.currentTimeMillis()));
-		
+		router4.addTableEntry(router3.getIPFromIndex(0), router3.getHopsFromIndex(0) + 1, "e1", timeStamp.toString());
 		
 		routers.add(router1);
 		routers.add(router2);
@@ -59,21 +58,20 @@ public class main {
 		
 		switch(chosenRouter){
 			case 0:
-				router2.removeAllAtIndex(1);
-				router3.removeAllAtIndex(1);
-				
+				router2.removeTableEntryAtIndex(1);
+				router3.removeTableEntryAtIndex(1);
 				break;
 			
 			case 1:
-				router1.removeAllAtIndex(1);
-				router3.removeAllAtIndex(2);
+				router1.removeTableEntryAtIndex(1);
+				router3.removeTableEntryAtIndex(2);
 				break;
 			case 2:
-				router1.removeAllAtIndex(3);
-				router4.removeAllAtIndex(1);
+				router1.removeTableEntryAtIndex(3);
+				router4.removeTableEntryAtIndex(1);
 				break;
 			case 3:
-				router3.removeAllAtIndex(3);
+				router3.removeTableEntryAtIndex(3);
 				break;
 		
 		}
@@ -82,8 +80,6 @@ public class main {
 		for(Router router : routers){
 			router.displayTable();
 		}
-		
-		
 	}
 
 }
