@@ -8,12 +8,12 @@ import java.util.Random;
  * 
  * @author Tommy Warren, Devin Durham
  *	@version 6/27/2017
- */
+ */ 
 public class main {
-
+	static ArrayList<Router> routersArray = new ArrayList<Router>();
 	public static void main(String[] args) {
+
 		
-		ArrayList<Router> routersArray = new ArrayList<Router>();
 		Random rand = new Random(System.currentTimeMillis());
 		int chosenRouter;
 		Date timeStamp = new Date(System.currentTimeMillis());
@@ -32,16 +32,28 @@ public class main {
 		
 		//Adding entries for each routers tables
 		router1.addTableEntry(router2.getIPFromIndex(0),1, "a1", timeStamp.toString());
+		router1.setRouterArr(router2);
 		router1.addTableEntry(router3.getIPFromIndex(0),1, "a2", timeStamp.toString());
+		router1.setRouterArr(router3);
+		router1.addTableEntry("192.168.1.1",0, "a3", timeStamp.toString());
+		router1.addTableEntry("192.168.1.2",0, "a3", timeStamp.toString());
 		
 		router2.addTableEntry(router1.getIPFromIndex(0),1, "b1", timeStamp.toString());
+		router2.setRouterArr(router1);
 		router2.addTableEntry(router3.getIPFromIndex(0),1, "b2", timeStamp.toString());
+		router2.setRouterArr(router3);
+		router2.addTableEntry("192.168.1.1",0, "b3", timeStamp.toString());
+		router2.addTableEntry("192.168.1.2",0, "b3", timeStamp.toString());
 		
 		router3.addTableEntry(router1.getIPFromIndex(0),1, "c1", timeStamp.toString());
 		router3.addTableEntry(router2.getIPFromIndex(0),1, "c2", timeStamp.toString());
 		router3.addTableEntry(router4.getIPFromIndex(0),1, "c3", timeStamp.toString());
+		router3.setRouterArr(router2);
+		router3.setRouterArr(router1);
+		router3.setRouterArr(router4);
 		
 		router4.addTableEntry(router3.getIPFromIndex(0),1, "d1", timeStamp.toString());
+		router4.addTableEntry("192.168.4.1",1, "d2", timeStamp.toString());
 		
 		//adding routers to list of routers
 		routersArray.add(router1);
@@ -57,6 +69,7 @@ public class main {
 			router.displayTable();
 		}
 		
+		//Removing the indexing from other tables
 		switch(chosenRouter){
 			case 0:
 				router2.removeTableEntryAtIndex(1);
@@ -85,9 +98,26 @@ public class main {
 		}
 	}
 	
-	public static void dfs(){
-		//TODO
+	public static void check(){
+		for(int r = 0; r<routersArray.size(); r++){
+			Router currRout = routersArray.get(r);
+			for(int y = 0; y<currRout.getRouterArr().size(); y++){
+				if(!routersArray.contains(currRout.getRouterFromIndex(y))){
+					//remove the router from curRout list
+					//remove any address that require that routers 
+				}
+			}
+		}
 	}
+	
+	public static void dfs(){
+		//given a router, look at the next router. 
+		//if it still exist in the list of routers, increment the hop
+		//recursively continue till you hit a dead end, then go back up one depth
+		//continue for all nodes
+	}
+	
+	
 	
 	
 

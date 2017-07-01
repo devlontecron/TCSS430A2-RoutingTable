@@ -112,9 +112,9 @@ public class Router {
 
 	public void displayTable() {
 		
-		System.out.println("\nPort   		Ip Adrress   Hops   	Time");
+		System.out.println("\n   Port   	  Ip Adrress      Hops  	Time");
 		for (int i = 0; i < ipArr.size(); i++) {
-			System.out.printf("%-15s%-17s%-5s%1s", portsArr.get(i), ipArr.get(i),hopsArr.get(i),timeArr.get(i));
+			System.out.printf("%-3s%-15s%-17s%-5s%1s", i,portsArr.get(i), ipArr.get(i),hopsArr.get(i),timeArr.get(i));
 			System.out.println("");
 			
 		}
