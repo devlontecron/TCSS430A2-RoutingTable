@@ -70,9 +70,6 @@ public class main {
 		
 		dfs();
 		
-		
-		System.out.println("Removing router in network.\n");
-		
 		//Removing the indexing from other tables
 		switch(chosenRouter){
 			case 0:
@@ -101,7 +98,7 @@ public class main {
 		}
 		myRouters.remove(chosenRouter);
 
-		System.out.println("\nRouter " + (chosenRouter+1) +" has failed");
+		System.out.println("\nRouter " + (chosenRouter+1) +" has failed\n");
 		
 		dfs();
 		
@@ -110,7 +107,9 @@ public class main {
 	private static void dfs() {
 
 		for (Router r : myRouters) {
-
+			
+			long start = System.currentTimeMillis();
+			
 			// Set up hop counter.
 			double hops = 0;
 
@@ -153,11 +152,31 @@ public class main {
 					}
 				}
 			}
+			
 			// Prints out the network in a list, first value is IP address,
 			// second is # of hops to the address.
-			System.out.println("The network for: " + r.getIPFromIndex(0) + " " + network);
+
+			//System.out.println("The network for: " + r.getIPFromIndex(0) + " " + network);
+			
+			
+			
+			long finish = System.currentTimeMillis() - start;
+			
+			System.out.println("   Displaying Routing Table for: " + r.getIPFromIndex(0) + "\n");
+			displayTable(network, finish);
 		}
 
+	}
+	
+	private static void displayTable(HashMap<String, Integer> map, long time){
+		
+		System.out.println("Destination Address      Hops  		Time");
+		
+		for(String string : map.keySet()){
+			System.out.printf("%-26s%-6d %8d ms\n", string, map.get(string), time);
+		}
+		
+		System.out.println();
 	}
 
 }
