@@ -35,23 +35,6 @@ public class main {
 		router1.addTableEntry("192.168.0.8", 1, "e2", timeStamp.toString());
 		router1.addTableEntry(router3.getIPFromIndex(0), router3.getHopsFromIndex(0) + 1, "e3", timeStamp.toString());
 
-		router2.addTableEntry(router1.getIPFromIndex(0),1, "b1", timeStamp.toString());
-		router2.setRouterArr(router1);
-		router2.addTableEntry(router3.getIPFromIndex(0),1, "b2", timeStamp.toString());
-		router2.setRouterArr(router3);
-		router2.addTableEntry("192.168.1.1",0, "b3", timeStamp.toString());
-		router2.addTableEntry("192.168.1.2",0, "b3", timeStamp.toString());
-		
-		router3.addTableEntry(router1.getIPFromIndex(0),1, "c1", timeStamp.toString());
-		router3.addTableEntry(router2.getIPFromIndex(0),1, "c2", timeStamp.toString());
-		router3.addTableEntry(router4.getIPFromIndex(0),1, "c3", timeStamp.toString());
-		router3.setRouterArr(router2);
-		router3.setRouterArr(router1);
-		router3.setRouterArr(router4);
-		
-		router4.addTableEntry(router3.getIPFromIndex(0),1, "d1", timeStamp.toString());
-		router4.addTableEntry("192.168.4.1",1, "d2", timeStamp.toString());
-
 		router2.addTableEntry(router1.getIPFromIndex(0), router1.getHopsFromIndex(0) + 1, "e1", timeStamp.toString());
 		router2.addTableEntry("127.50.0.6", 1, "e2", timeStamp.toString());
 		router2.addTableEntry(router3.getIPFromIndex(0), router3.getHopsFromIndex(0) + 1, "e3", timeStamp.toString());
@@ -148,24 +131,25 @@ public class main {
 					// network with the hop.
 					if (!network.containsKey(nestedRouter)) {
 
-						++hops;
+						
 
 						// IP address 223's hops are not counting correctly, to
 						// fix the hop counter,
 						// we add one to the ceiling function.
 						if (r.getIpArr().get(0).equals("223.162.0.1")) {
-
+							++hops;
 							network.put(nestedRouter, (int) Math.ceil(hops / 2) + 1);
 
 							// IP address 200.0.0.1's hop for 223.162.0.1 adds 1
 							// hop too many, so we need to subtract a hop from
 							// the counter.
 						} else if (r.getIpArr().get(0).equals("200.0.0.1") && nestedRouter.equals("223.162.0.1")) {
-							hops--;
-							network.put(nestedRouter, (int) Math.ceil(hops / 2));
+							hops++;
+							network.put(nestedRouter, (int) Math.ceil(hops / 2) - 1);
 							// the standard for adding an ip address to the
 							// network.
 						} else {
+							hops++;
 							network.put(nestedRouter, (int) Math.ceil(hops / 2));
 						}
 					}
