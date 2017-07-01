@@ -131,25 +131,23 @@ public class main {
 					// network with the hop.
 					if (!network.containsKey(nestedRouter)) {
 
-						
+						hops++;
 
 						// IP address 223's hops are not counting correctly, to
 						// fix the hop counter,
 						// we add one to the ceiling function.
 						if (r.getIpArr().get(0).equals("223.162.0.1")) {
-							++hops;
 							network.put(nestedRouter, (int) Math.ceil(hops / 2) + 1);
 
 							// IP address 200.0.0.1's hop for 223.162.0.1 adds 1
 							// hop too many, so we need to subtract a hop from
 							// the counter.
 						} else if (r.getIpArr().get(0).equals("200.0.0.1") && nestedRouter.equals("223.162.0.1")) {
-							hops++;
+							
 							network.put(nestedRouter, (int) Math.ceil(hops / 2) - 1);
 							// the standard for adding an ip address to the
 							// network.
 						} else {
-							hops++;
 							network.put(nestedRouter, (int) Math.ceil(hops / 2));
 						}
 					}
@@ -160,18 +158,6 @@ public class main {
 			System.out.println("The network for: " + r.getIPFromIndex(0) + " " + network);
 		}
 
-	}
-
-	public static void check() {
-		for (int r = 0; r < myRouters.size(); r++) {
-			Router currRout = myRouters.get(r);
-			for (int y = 0; y < currRout.getRouterArr().size(); y++) {
-				if (!myRouters.contains(currRout.getRouterFromIndex(y))) {
-					// remove the router from curRout list
-					// remove any address that require that routers
-				}
-			}
-		}
 	}
 
 }
