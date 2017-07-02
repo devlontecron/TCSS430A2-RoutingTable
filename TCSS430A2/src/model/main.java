@@ -3,13 +3,21 @@ package model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * 
- * @author Tommy Warren, Devin Durham
- * @version 6/27/2017]
+ * # TCSS430A2
+ *	TCSS 430 Assignment 2
+ *- Computer Simulation Project (Simulation of a Router's Routing Table)
+ *
+ *	Created by Project Team 2 [Tommy Warren, Devin Durham, Vu Hoang]
+ *
+ *	Project Description: Write a computer program to construct a look-up routing table with ten entries. 
+ *	Each entry must contain a time, destination address, cost of a destination node, and a router port number. 
+ *	The program should demonstrate the updating mechanism on a frequent basis.
+ *
+ * @author Tommy Warren, Devin Durham, Vu Hoang
+ * @version 6/27/2017
  */
 
 public class main {
@@ -17,7 +25,6 @@ public class main {
 
 	public static void main(String[] args) {
 
-		Random rand = new Random();
 		int chosenRouter;
 		Date timeStamp = new Date(System.currentTimeMillis());
 		
@@ -71,7 +78,6 @@ public class main {
 		
 		//removes a randomly chosen router.
 		chosenRouter = ThreadLocalRandom.current().nextInt(0, myRouters.size());
-				//rand.nextInt() * 0 + myRouters.size() - 1;
 		
 		routeNetwork();
 		
