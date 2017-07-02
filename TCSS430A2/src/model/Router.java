@@ -8,6 +8,7 @@ import java.util.Date;
  * @author Tommy Warren, Devin Durham,
  * @version 6/27/2017
  *
+ *A class for each router which contains a list for the ip address, ports, hops, and time stamp 
  */
 
 public class Router {
@@ -95,7 +96,12 @@ public class Router {
 	public void removeTime(int x) {
 		this.timeArr.remove(x);
 	}
+	
 
+	/**
+	 * a simple method to be able to remove a entry form the table given an index (row)
+	 * @param x
+	 */
 	public void removeTableEntryAtIndex(int x) {
 		this.timeArr.remove(x);
 		this.portsArr.remove(x);
@@ -103,6 +109,13 @@ public class Router {
 		this.ipArr.remove(x);
 	}
 
+	/**
+	 * a method to insert an entry into the router table
+	 * @param ip
+	 * @param hops
+	 * @param ports
+	 * @param time
+	 */
 	public void addTableEntry(String ip, int hops, String ports, String time) {
 		this.timeArr.add(time);
 		this.portsArr.add(ports);
@@ -110,11 +123,5 @@ public class Router {
 		this.ipArr.add(ip);
 	}
 
-	public void displayTable() {
-		
-		for (int i = 0; i < routerArr.size() ; i++) {
-			System.out.printf("%-25s%-5s%1s\n", ipArr.get(i), hopsArr.get(i), timeArr.get(i));
-		}
-	}
 
 }
