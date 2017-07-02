@@ -6,9 +6,7 @@ import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * # TCSS430A2
- *	TCSS 430 Assignment 2
- *- Computer Simulation Project (Simulation of a Router's Routing Table)
+ *	TCSS 430 Assignment 2 - Computer Simulation Project (Simulation of a Router's Routing Table)
  *
  *	Created by Project Team 2 [Tommy Warren, Devin Durham, Vu Hoang]
  *
