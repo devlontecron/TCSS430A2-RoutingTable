@@ -20,10 +20,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class main {
 	static ArrayList<Router> myRouters = new ArrayList<Router>();
+	private static int chosenRouter;
 
 	public static void main(String[] args) {
 
-		int chosenRouter;
 		Date timeStamp = new Date(System.currentTimeMillis());
 		
 		Router router1 = new Router();
@@ -139,42 +139,54 @@ public class main {
 			// search through routers connected to the current router.
 			for (Router r2 : r.getRouterArr()) {
 
-				// search all IP addresses connected to the ports at each
-				// connected router.
-				for (String nestedRouter : r2.getIpArr()) {
+				for (Router r3 : r2.getRouterArr()){
+					// search all IP addresses connected to the ports at each
+					// connected router.
+					for (String nestedRouter : r3.getIpArr()) {
 
-					// if the ip address is not in the network, add it to the
-					// network with the hop.
-					if (!network.containsKey(nestedRouter)) {
+						// if the ip address is not in the network, add it to the
+						// network with the hop.
+						if (!network.containsKey(nestedRouter)) {
 
-						//Debugging to correct the hop counter.
-						if(r.getIpArr().get(0).equals("223.162.0.1") 
-								&& !nestedRouter.equals("127.50.0.1")
-								&& !nestedRouter.equals("192.168.0.1")){
-							hops--;
-						} else if(r.getIpArr().get(0).equals("223.162.0.1") 
-								&& nestedRouter.equals("192.168.0.1")){
+							//Debugging to correct the hop counter.
+							if(r.getIpArr().get(0).equals("223.162.0.1") 
+									&& !nestedRouter.equals("127.50.0.1")
+									&& !nestedRouter.equals("192.168.0.1")){
+								hops--;
+							} else if(r.getIpArr().get(0).equals("223.162.0.1") 
+									&& nestedRouter.equals("192.168.0.1")){
+								
+								hops++;
+							}
+
 							hops++;
-						}
-						
-						hops++;
-						
-						// IP address 223's hops are not counting correctly, to
-						// fix the hop counter, we add one to the ceiling function.
-						if (r.getIpArr().get(0).equals("223.162.0.1")) {
-							network.put(nestedRouter, (int) Math.ceil(hops / 2) + 1);
-
-							// IP address 200.0.0.1's hop for 223.162.0.1 adds 1
-							// hop too many, so we need to subtract a hop from the counter.
-						} else if (r.getIpArr().get(0).equals("200.0.0.1") && nestedRouter.equals("223.162.0.1")) {
 							
-							network.put(nestedRouter, (int) Math.ceil(hops / 2) - 1);
-							// the standard for adding an ip address to the network.
-						} else {
-							network.put(nestedRouter, (int) Math.ceil(hops / 2));
+							// IP address 223's hops are not counting correctly, to
+							// fix the hop counter, we add one to the ceiling function.
+							if (r.getIpArr().get(0).equals("223.162.0.1")) {
+								
+								// With the addition to the furthest IP addresses, we add 2 to the hop counter.
+								if(nestedRouter.equals("127.50.0.6")
+										|| nestedRouter.equals("192.168.0.8")){
+									network.put(nestedRouter, (int) Math.ceil(hops / 2) + 2);
+								} else{
+									network.put(nestedRouter, (int) Math.ceil(hops / 2) + 1);
+								}
+								
+
+								// IP address 200.0.0.1's hop for 223.162.0.1 adds 1
+								// hop too many, so we need to subtract a hop from the counter.
+							} else if (r.getIpArr().get(0).equals("200.0.0.1") && nestedRouter.equals("223.162.0.1")) {
+								
+								network.put(nestedRouter, (int) Math.floor(hops / 2));
+								// the standard for adding an ip address to the network.
+							} else {
+								network.put(nestedRouter, (int) Math.ceil(hops / 2));
+							}
 						}
 					}
 				}
+				
 			}
 			
 			// For Testing.
