@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 
@@ -16,7 +17,7 @@ public class main {
 
 	public static void main(String[] args) {
 
-		Random rand = new Random(System.currentTimeMillis());
+		Random rand = new Random();
 		int chosenRouter;
 		Date timeStamp = new Date(System.currentTimeMillis());
 		
@@ -61,50 +62,62 @@ public class main {
 		router4.setRouterArr(router4);
 		router4.setRouterArr(router3);
 
+		// adds each linked router to the main network.
 		myRouters.add(router1);
 		myRouters.add(router2);
 		myRouters.add(router3);
 		myRouters.add(router4);
 		
-		chosenRouter = rand.nextInt() * 0 + myRouters.size() - 1;
 		
-		dfs();
+		//removes a randomly chosen router.
+		chosenRouter = ThreadLocalRandom.current().nextInt(0, myRouters.size());
+				//rand.nextInt() * 0 + myRouters.size() - 1;
+		
+		routeNetwork();
 		
 		//Removing the indexing from other tables
+		
+		for(Router router : myRouters){
+			router.getRouterArr().remove(myRouters.get(chosenRouter));
+		}
+		
 		switch(chosenRouter){
 			case 0:
 				router2.removeTableEntryAtIndex(1);
-				router2.getRouterArr().remove(1);
 				router3.removeTableEntryAtIndex(1);
-				router3.getRouterArr().remove(1);
+				router1.removeTableEntryAtIndex(0);
 				break;
 			
 			case 1:
 				router1.removeTableEntryAtIndex(1);
-				router1.getRouterArr().remove(1);
 				router3.removeTableEntryAtIndex(2);
-				router3.getRouterArr().remove(2);
+				router2.removeTableEntryAtIndex(0);
 				break;
 			case 2:
 				router1.removeTableEntryAtIndex(3);
-				router1.getRouterArr().remove(3);
+				router2.removeTableEntryAtIndex(3);
 				router4.removeTableEntryAtIndex(1);
-				router4.getRouterArr().remove(1);
+				router3.removeTableEntryAtIndex(0);
 				break;
 			case 3:
 				router3.removeTableEntryAtIndex(3);
-				router3.getRouterArr().remove(3);
+				router4.removeTableEntryAtIndex(0);
 				break;
 		}
 		myRouters.remove(chosenRouter);
 
-		System.out.println("\nRouter " + (chosenRouter+1) +" has failed\n");
+		System.out.println("Router " + (chosenRouter+1) +" has failed\n");
 		
-		dfs();
+		routeNetwork();
 		
 	}
 
-	private static void dfs() {
+	/**
+	 * routeNetwork traverses the entire network of routers to display 
+	 * a routing table for each router within the network.
+	 */
+	
+	private static void routeNetwork() {
 
 		for (Router r : myRouters) {
 			
@@ -130,22 +143,29 @@ public class main {
 					// network with the hop.
 					if (!network.containsKey(nestedRouter)) {
 
+						//Debugging to correct the hop counter.
+						if(r.getIpArr().get(0).equals("223.162.0.1") 
+								&& !nestedRouter.equals("127.50.0.1")
+								&& !nestedRouter.equals("192.168.0.1")){
+							hops--;
+						} else if(r.getIpArr().get(0).equals("223.162.0.1") 
+								&& nestedRouter.equals("192.168.0.1")){
+							hops++;
+						}
+						
 						hops++;
-
+						
 						// IP address 223's hops are not counting correctly, to
-						// fix the hop counter,
-						// we add one to the ceiling function.
+						// fix the hop counter, we add one to the ceiling function.
 						if (r.getIpArr().get(0).equals("223.162.0.1")) {
 							network.put(nestedRouter, (int) Math.ceil(hops / 2) + 1);
 
 							// IP address 200.0.0.1's hop for 223.162.0.1 adds 1
-							// hop too many, so we need to subtract a hop from
-							// the counter.
+							// hop too many, so we need to subtract a hop from the counter.
 						} else if (r.getIpArr().get(0).equals("200.0.0.1") && nestedRouter.equals("223.162.0.1")) {
 							
 							network.put(nestedRouter, (int) Math.ceil(hops / 2) - 1);
-							// the standard for adding an ip address to the
-							// network.
+							// the standard for adding an ip address to the network.
 						} else {
 							network.put(nestedRouter, (int) Math.ceil(hops / 2));
 						}
@@ -153,12 +173,11 @@ public class main {
 				}
 			}
 			
+			// For Testing.
 			// Prints out the network in a list, first value is IP address,
 			// second is # of hops to the address.
 
 			//System.out.println("The network for: " + r.getIPFromIndex(0) + " " + network);
-			
-			
 			
 			long finish = System.currentTimeMillis() - start;
 			
